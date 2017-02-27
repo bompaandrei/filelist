@@ -32,13 +32,7 @@ class RetrieveFilelist(object):
         """
         self.session.headers.update({"User-Agent": \
             "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0"})
-        self.session.get("http://filelist.ro")
-        set_cookie = self.session.cookies.get_dict()
-        uid = "__cfduid={}".format(set_cookie['__cfduid'])
-        phpsession = "PHPSESSID={}".format(set_cookie['PHPSESSID'])
-        cookie = "{}; {}".format(uid, phpsession)
         self.session.headers.update({"Content-Type": "application/x-www-form-urlencoded"})
-        self.session.headers.update({"Cookie": cookie})
         self.session.post("http://filelist.ro/takelogin.php", self.credentials)
 
     def get_torrents_data(self):
