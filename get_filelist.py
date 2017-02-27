@@ -54,11 +54,9 @@ class RetrieveFilelist(object):
             browse_page = self.session.get(url)
             soup = BeautifulSoup(browse_page.content, "html.parser")
             for main_div in soup.find_all("div", class_="torrentrow"):
-                torrent_tables = []
                 soup = BeautifulSoup(str(main_div), "html.parser")
-                for div in soup.find_all('div'):
-                    for torrenttable in div.find_all(class_="torrenttable"):
-                        torrent_tables.append(torrenttable)
+                torrent_tables = [torrenttable for div in soup.find_all('div') for torrenttable in
+                                  div.find_all(class_="torrenttable")]
                 for content in torrent_tables[1].find_all('a'):
                     title = content.get('title')
                 for content in torrent_tables[3].find_all('a'):
