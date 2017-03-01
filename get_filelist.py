@@ -3,8 +3,8 @@
 Script that will get everything from filelist. Torrent names, IDs for downloads,
 time of upload... and will do a lot of automatic tasks.
 TO DO:
-    - Get ID, torrent name and time / date without using regex [DONE]
-    - Get Seeders and Leechers
+    - Get ID, torrent name and time / date without using regex  [DONE]
+    - Get Seeders and Leechers                                  [DONE]
     - Use a temporary file for filelist data
     - Sort the torrents by time / date
     - Search for best torrent that could be used to increase the ratio
@@ -60,8 +60,11 @@ class RetrieveFilelist(object):
                     time_date = content.get_text()
                 for content in torrent_tables[6].find_all(class_="small"):
                     size = content.get_text()
+                seeders = torrent_tables[8].get_text()
+                leechers = torrent_tables[9].get_text()
                 self.torrents.update({torrent_id: {"name": title, "download_uri": download_uri, \
-                                                   "upload_time": time_date, "torrent_size": size}})
+                                                    "upload_time": time_date, "torrent_size": size,\
+                                                    "seeders": seeders, "leechers": leechers}})
         print json.dumps(self.torrents, indent=4)
 
 TEST_CLASS = RetrieveFilelist()
